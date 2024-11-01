@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Compute BMI female easily with our user-friendly Body Mass Index Computation. Input your age, height, and weight to get accurate results tailored for women. Understand your body mass index to maintain a healthy lifestyle.">
+    <title>Body Mass Index Computation</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #0f8cef; /* Black-gray background */
+            color: #fff;
+        }
+        .header-footer {
+            background-color: #004085; /* Navy blue */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+        .calculator {
+            margin: 50px auto;
+            padding: 30px;
+            background-color: #333; /* Dark background for calculator */
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            max-width: 600px;
+        }
+        .pie-chart-container {
+            margin: 20px 0;
+            text-align: center;
+            display: none; /* Hide by default */
+        }
+        .pie-chart {
+            width: 300px;
+            height: 300px; /* Fixed height for the pie chart */
+        }
+        .message-box {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #222;
+            border-radius: 5px;
+            display: none; /* Hide by default */
+        }
+    </style>
+	
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre Caslon Text">
+<style>
+body {
+  font-family: "Libre Caslon Text", serif;
+}
+</style>
+	
+</head>
+<body>
+
+    <header class="header-footer text-center py-4">
+        <h1>Body Mass Index Computation</h1>
+    </header>
+
+    <div class="calculator text-center p-4">
+        <h2>BMI Calculator</h2>
+        <form id="bmiForm">
+            <div class="form-group">
+                <label for="age">Age:</label>
+                <input type="number" id="age" class="form-control" placeholder="Enter your age" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="gender">Gender:</label>
+                <select id="gender" class="form-control">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+            </div>
+            
+            <div>
+                <label>Units:</label><br>
+                <label class="radio-inline">
+                    <input type="radio" name="unit" value="us" checked> US Units
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="unit" value="metric"> Metric Units
+                </label>
+            </div>
+
+            <div class="form-group" id="usInputs">
+                <label for="heightFeet">Height (Feet):</label>
+                <input type="number" id="heightFeet" class="form-control" placeholder="Feet" required>
+                <label for="heightInches">Height (Inches):</label>
+                <input type="number" id="heightInches" class="form-control" placeholder="Inches" required>
+                <label for="weightPounds">Weight (Pounds):</label>
+                <input type="number" id="weightPounds" class="form-control" placeholder="Weight in pounds" required>
+            </div>
+            
+            <div class="form-group" id="metricInputs" style="display:none;">
+                <label for="heightCM">Height (CM):</label>
+                <input type="number" id="heightCM" class="form-control" placeholder="Centimeters" required>
+                <label for="weightKG">Weight (KG):</label>
+                <input type="number" id="weightKG" class="form-control" placeholder="Weight in kg" required>
+            </div>
+
+            <button type="button" class="btn btn-primary" onclick="calculateBMI()">Calculate BMI</button>
+        </form>
+        
+        <h3 class="mt-4">Your BMI: <span id="bmiResult">-</span></h3>
+
+        <!-- Message Box -->
+        <div id="messageBox" class="message-box"></div>
+
+        <!-- Bootstrap card for pie chart -->
+        <div id="pieChartContainer" class="card pie-chart-container">
+            <div class="card-header">
+                BMI Distribution
+            </div>
+            <div class="card-body">
+                <canvas id="pieChart" class="pie-chart"></canvas>
+            </div>
+        </div>
+    </div>
+	
+	<div class="container mt-5">
+    <h2 class="text-center">Unlocking the Secrets of Body Mass Index: Your Ultimate Guide to BMI Computation</h2>
+    <p class="lead">Discover how Body Mass Index (BMI) can help you understand your health better. This comprehensive guide will show you how to compute your BMI accurately and interpret the results effectively.</p>
+
+    <h3>What is Body Mass Index (BMI)?</h3>
+    <p>Body Mass Index, commonly referred to as BMI, is a widely used measurement that helps assess whether a person has a healthy body weight for their height. The formula for calculating BMI is simple: it is the weight in kilograms divided by the square of the height in meters (kg/m²). This straightforward calculation provides a useful indicator of body fat and can be an essential tool for identifying potential health risks.</p>
+
+    <h3>Why is BMI Important?</h3>
+    <p>BMI is crucial because it serves as a quick screening tool to categorize individuals into different weight classifications. Understanding your BMI can help you:</p>
+    <ul>
+        <li><strong>Assess Your Health:</strong> Knowing your BMI can alert you to potential health risks associated with being underweight, overweight, or obese.</li>
+        <li><strong>Guide Weight Management:</strong> BMI can help in creating personalized weight management strategies by identifying your current weight status.</li>
+        <li><strong>Monitor Changes Over Time:</strong> Tracking your BMI over time can help you understand how your weight is changing in relation to your height.</li>
+    </ul>
+
+    <h3>How to Calculate Your BMI</h3>
+    <p>Calculating your BMI is a straightforward process that you can do using the BMI calculator tool available on this page. Simply input your age, gender, height, and weight, and the calculator will provide you with your BMI and a detailed interpretation of your results.</p>
+
+    <h3>Interpreting Your BMI Results</h3>
+    <p>Once you've calculated your BMI, interpreting the results is essential. Here’s how to understand the BMI categories:</p>
+    <ul>
+        <li><strong>Underweight:</strong> A BMI less than 18.5 indicates that you may be underweight, which can lead to health issues.</li>
+        <li><strong>Normal Weight:</strong> A BMI between 18.5 and 24.9 is considered healthy and reflects a balanced weight.</li>
+        <li><strong>Overweight:</strong> A BMI between 25 and 29.9 suggests that you may be overweight and at risk for certain health problems.</li>
+        <li><strong>Obesity:</strong> A BMI of 30 or higher indicates obesity, which can significantly increase the risk of chronic diseases.</li>
+    </ul>
+
+    <h3>Limitations of BMI</h3>
+    <p>While BMI is a useful screening tool, it has limitations. It does not directly measure body fat or account for factors such as muscle mass, bone density, and overall body composition. Therefore, it is advisable to consult healthcare professionals for a more comprehensive health assessment.</p>
+
+    <h3>Conclusion</h3>
+    <p>Understanding how to compute your Body Mass Index is a vital step toward better health. By using the BMI calculator and interpreting your results, you can gain valuable insights into your weight status and take appropriate action towards a healthier lifestyle. Remember, your BMI is just one part of the picture—consider other factors and consult with healthcare professionals as needed!</p>
+
+    <h3>Get Started Today!</h3>
+    <p>Ready to find out your BMI? Use the BMI calculator tool above and take the first step toward understanding your health better!</p>
+</div>
+
+
+    <footer class="header-footer text-center py-4">
+        <p>&copy; 2024 Body Mass Index Computation. All rights reserved.</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Toggle inputs based on selected unit
+        document.querySelectorAll('input[name="unit"]').forEach((elem) => {
+            elem.addEventListener("change", function(event) {
+                if (event.target.value === "us") {
+                    document.getElementById("usInputs").style.display = "block";
+                    document.getElementById("metricInputs").style.display = "none";
+                } else {
+                    document.getElementById("usInputs").style.display = "none";
+                    document.getElementById("metricInputs").style.display = "block";
+                }
+            });
+        });
+
+        // Initialize the pie chart variable
+        let pieChart;
+
+        // Calculate BMI function
+        function calculateBMI() {
+            let age = document.getElementById("age").value;
+            let gender = document.getElementById("gender").value;
+            let bmi;
+
+            if (document.querySelector('input[name="unit"]:checked').value === "us") {
+                let feet = parseFloat(document.getElementById("heightFeet").value);
+                let inches = parseFloat(document.getElementById("heightInches").value);
+                let weight = parseFloat(document.getElementById("weightPounds").value);
+                let height = (feet * 12 + inches) * 0.0254; // Convert to meters
+                weight = weight * 0.453592; // Convert to kg
+                bmi = weight / (height * height);
+            } else {
+                let height = parseFloat(document.getElementById("heightCM").value) / 100; // Convert to meters
+                let weight = parseFloat(document.getElementById("weightKG").value); // Weight in kg
+                bmi = weight / (height * height);
+            }
+
+            // Display BMI result
+            document.getElementById("bmiResult").innerText = bmi.toFixed(2);
+            displayMessage(bmi);
+            drawChart(bmi);
+            document.getElementById("pieChartContainer").style.display = 'block'; // Show the pie chart container
+        }
+
+        // Display message based on BMI
+        function displayMessage(bmi) {
+            const messageBox = document.getElementById("messageBox");
+            let message = `BMI: ${bmi.toFixed(2)} - `;
+
+            if (bmi < 18.5) {
+                message += "You are underweight.";
+            } else if (bmi >= 18.5 && bmi < 24.9) {
+                message += "You are normal weight.";
+            } else if (bmi >= 25 && bmi < 29.9) {
+                message += "You are overweight.";
+            } else {
+                message += "You are obese.";
+            }
+
+            messageBox.innerText = message;
+            messageBox.style.display = 'block'; // Show the message box
+        }
+
+        // Draw pie chart based on BMI
+        function drawChart(bmi) {
+            const ctx = document.getElementById('pieChart').getContext('2d');
+            let underweight = 0, normal = 0, overweight = 0, obesity = 0;
+
+            // Assign values for the pie chart based on BMI ranges
+            if (bmi < 18.5) {
+                underweight = 100;
+            } else if (bmi >= 18.5 && bmi < 24.9) {
+                normal = 100;
+            } else if (bmi >= 25 && bmi < 29.9) {
+                overweight = 100;
+            } else {
+                obesity = 100;
+            }
+
+            const data = {
+                labels: ['Underweight', 'Normal', 'Overweight', 'Obesity'],
+                datasets: [{
+                    data: [underweight, normal, overweight, obesity],
+                    backgroundColor: ['#00aaff', '#00cc44', '#ffcc00', '#ff3300'], // Different colors
+                }]
+            };
+
+            // Destroy existing chart if exists
+            if (pieChart) {
+                pieChart.destroy();
+            }
+
+            // Create new pie chart
+            pieChart = new Chart(ctx, {
+                type: 'pie',
+                data: data,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+    </script>
+</body>
+</html>
